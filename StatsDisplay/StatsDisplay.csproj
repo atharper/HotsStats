@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -54,10 +55,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FullStatsWindow.xaml.cs">
+      <DependentUpon>FullStatsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\GenericValueConverter.cs" />
+    <Compile Include="Helpers\HasValueToVisibilityConverter.cs" />
+    <Compile Include="Helpers\HotKey.cs" />
+    <Compile Include="HeroesWindow.cs" />
+    <Compile Include="MockViewModel.cs" />
+    <Compile Include="PlayerRowTemplateSelector.cs" />
+    <Compile Include="RecapStatsWindow.xaml.cs">
+      <DependentUpon>RecapStatsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="FullStatsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RecapStatsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShortStatsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -65,11 +86,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="ShortStatsWindow.xaml.cs">
+      <DependentUpon>ShortStatsWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -93,7 +118,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
@@ -104,6 +129,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Heroes.ReplayParser\Heroes.ReplayParser\Heroes.ReplayParser.csproj">
+      <Project>{aaf78d53-a1da-424a-b1aa-09895eab3b2b}</Project>
+      <Name>Heroes.ReplayParser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Heroes.ReplayParser\MpqTool\MpqTool.csproj">
+      <Project>{fa50e172-836b-47bb-8745-60595e4fb12a}</Project>
+      <Name>MpqTool</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StatsFetcher\StatsFetcher.csproj">
       <Project>{9d065a48-71d9-4f83-8428-2ee88405f05b}</Project>
       <Name>StatsFetcher</Name>
@@ -113,6 +146,10 @@
     <Resource Include="Resources\close.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\linkBlue.png" />
+    <Resource Include="Resources\linkRed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
