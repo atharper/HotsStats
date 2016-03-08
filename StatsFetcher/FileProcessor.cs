@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
@@ -33,7 +32,7 @@ namespace StatsFetcher
 			File.Copy(path, tmpPath, overwrite: true);
 			var replay = ParseRejoin(tmpPath);
 			foreach (var profile in game.Players) {
-				var player = replay.Players.Where(p => p.Name == profile.Name).Single();
+				var player = replay.Players.Single(p => p.Name == profile.Name);
 				profile.Hero = player.Character;
 				profile.HeroLevel = player.CharacterLevel;
 			}
@@ -51,7 +50,7 @@ namespace StatsFetcher
 				archive.AddListfileFilenames();
 
 				// Replay Details
-				ReplayDetails.Parse(replay, DataParser.GetMpqFile(archive, "save.details"), true);
+				ReplayDetails.Parse(replay, DataParser.GetMpqFile(archive, "save.details"));
 
 				// Player level is stored there
 				ReplayAttributeEvents.Parse(replay, DataParser.GetMpqFile(archive, "replay.attributes.events"));

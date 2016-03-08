@@ -1,23 +1,22 @@
-﻿using System;
+﻿using Heroes.ReplayParser;
+using HtmlAgilityPack;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Heroes.ReplayParser;
-using HtmlAgilityPack;
 
 namespace StatsFetcher
 {
-	public class ProfileFetcher
+  public class ProfileFetcher
 	{
-		private Game game;
-		private HttpClient web;
+		private readonly Game _game;
+		private readonly HttpClient _web;
 
 		public ProfileFetcher(Game game)
 		{
-			this.game = game;
-			this.web = new HttpClient();
+			_game = game;
+			_web = new HttpClient();
 		}
 
 		public async Task FetchBasicProfiles()
@@ -25,7 +24,7 @@ namespace StatsFetcher
 			var tasks = new List<Task>();
 
 			// start all requests in parallel
-			foreach (var p in game.Players) {
+			foreach (var p in _game.Players) {
 				tasks.Add(FetchBasicProfile(p));
 			}
 
@@ -39,7 +38,7 @@ namespace StatsFetcher
 			var tasks = new List<Task>();
 
 			// start all requests in parallel
-			foreach (var p in game.Players) {
+			foreach (var p in _game.Players) {
 				tasks.Add(FetchFullProfile(p));
 			}
 
@@ -50,8 +49,8 @@ namespace StatsFetcher
 
 		private async Task FetchBasicProfile(PlayerProfile p)
 		{
-			var url = $"https://www.hotslogs.com/API/Players/{(int)game.Region}/{p.BattleTag.Replace('#', '_')}";
-			var str = await web.GetStringAsync(url);
+			var url = $"https://www.hotslogs.com/API/Players/{(int)_game.Region}/{p.BattleTag.Replace('#', '_')}";
+			var str = await _web.GetStringAsync(url);
 			if (string.IsNullOrWhiteSpace(str) || str == "null")
 				return;
 			try {
@@ -70,7 +69,7 @@ namespace StatsFetcher
 			if (p.HotslogsId == null)
 				return;
 			var url = $"http://www.hotslogs.com/Player/Profile?PlayerID={p.HotslogsId}";
-			var str = await web.GetStringAsync(url);
+			var str = await _web.GetStringAsync(url);
 			try {
 				var doc = new HtmlDocument();
 				doc.LoadHtml(str);

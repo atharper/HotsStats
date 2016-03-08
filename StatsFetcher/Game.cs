@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Heroes.ReplayParser;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using Heroes.ReplayParser;
 
 namespace StatsFetcher
 {
-	public class Game : INotifyPropertyChanged
+  public class Game : INotifyPropertyChanged
 	{
 		public List<PlayerProfile> Players { get; set; }
 		public string Map { get; set; }

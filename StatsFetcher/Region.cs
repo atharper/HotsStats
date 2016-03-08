@@ -1,9 +1,6 @@
-﻿using System;
-using System.Linq;
-
-namespace StatsFetcher
+﻿namespace StatsFetcher
 {
-	public enum Region
+  public enum Region
 	{
 		US = 1,
 		EU = 2,
